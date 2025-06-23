@@ -98,6 +98,25 @@ export interface UserDMList {
 }
 
 /**
+ * 用户名登录
+ * @param username 用户名
+ * @param password 密码
+ */
+export async function loginWithUsername(
+  username: string,
+  password: string
+): Promise<UserLoginInfo> {
+  const { data } = await request.post('/api/user/login', {
+    username,
+    password,
+  });
+
+  sharedEvent.emit('loginSuccess', pickUserBaseInfo(data));
+
+  return data;
+}
+
+/**
  * 邮箱登录
  * @param email 邮箱
  * @param password 密码
@@ -177,6 +196,30 @@ export async function registerWithEmail({
     nickname,
     password,
     emailOTP,
+  });
+
+  return data;
+}
+
+/**
+ * 用户名注册账号
+ * @param username 用户名
+ * @param password 密码
+ * @param nickname 昵称
+ */
+export async function registerWithUsername({
+  username,
+  password,
+  nickname,
+}: {
+  username: string;
+  password: string;
+  nickname?: string;
+}): Promise<UserLoginInfo> {
+  const { data } = await request.post('/api/user/register', {
+    username,
+    nickname,
+    password,
   });
 
   return data;
