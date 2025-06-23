@@ -1,7 +1,7 @@
 import { Icon } from 'tailchat-design';
 import {
   isValidStr,
-  loginWithEmail,
+  loginWithUsername,
   t,
   useAsyncFn,
   useGlobalConfigStore,
@@ -26,7 +26,7 @@ import { pluginLoginAction } from '@/plugin/common';
  * 登录视图
  */
 export const LoginView: React.FC = React.memo(() => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const navRedirect = useSearchParam('redirect');
@@ -48,16 +48,15 @@ export const LoginView: React.FC = React.memo(() => {
 
   const [{ loading, error }, handleLogin] = useAsyncFn(async () => {
     await string()
-      .email(t('邮箱格式不正确'))
-      .required(t('邮箱不能为空'))
-      .validate(email);
+      .required(t('用户名不能为空'))
+      .validate(username);
 
     await string()
       .min(6, t('密码不能低于6位'))
       .required(t('密码不能为空'))
       .validate(password);
 
-    const data = await loginWithEmail(email, password);
+    const data = await loginWithUsername(username, password);
 
     setGlobalUserLoginInfo(data);
     await setUserJWT(data.token);
@@ -68,7 +67,7 @@ export const LoginView: React.FC = React.memo(() => {
     } else {
       navigate('/main');
     }
-  }, [email, password, navRedirect, pathname, navigate]);
+  }, [username, password, navRedirect, pathname, navigate]);
 
   const navToView = useNavToView();
 
@@ -82,13 +81,13 @@ export const LoginView: React.FC = React.memo(() => {
 
       <div>
         <div className="mb-4">
-          <div className="mb-2">{t('邮箱')}</div>
+          <div className="mb-2">{t('用户名')}</div>
           <EntryInput
-            name="login-email"
-            placeholder="name@example.com"
+            name="login-username"
+            placeholder="请输入用户名"
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className="mb-4">
