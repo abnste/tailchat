@@ -189,6 +189,8 @@ export {
   searchUserWithUniqueName,
   checkTokenValid,
   modifyUserField,
+  loginWithUsername,
+  registerWithUsername,
 } from './model/user';
 
 // redux
