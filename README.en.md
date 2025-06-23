@@ -1,5 +1,8 @@
 # Tailchat(User name login to register version)
 
+If the server has been deployed, it is recommended to clear the MongoDB database and reset it directly
+If the first deployment is implemented, you can replace the image source as this branch according to the official deployment process.
+
 [![Docker Publish](https://github.com/msgbyte/tailchat/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/msgbyte/tailchat/actions/workflows/docker-publish.yml)
 ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/moonrailgun/tailchat/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/moonrailgun/tailchat)
@@ -11,7 +14,7 @@
 
 ![tailchat](https://socialify.git.ci/msgbyte/tailchat/image?description=1&font=Inter&forks=1&issues=1&language=1&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F86033898%3Fs%3D200%26v%3D4&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Light)
 
-[简体中文](./README.zh.md)
+[简体中文](./README.md)
 
 ## Next generation noIM application in your own workspace
 
