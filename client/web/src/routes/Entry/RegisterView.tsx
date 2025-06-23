@@ -1,7 +1,7 @@
 import {
   isValidStr,
   model,
-  registerWithEmail,
+  registerWithUsername,
   showSuccessToasts,
   t,
   useAsyncFn,
@@ -26,21 +26,20 @@ import { TipIcon } from '@/components/TipIcon';
  * 注册视图
  */
 export const RegisterView: React.FC = React.memo(() => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
-  const [emailOTP, setEmailOTP] = useState('');
-  const [sendedEmail, setSendedEmail] = useState(false);
   const [customNickname, setCustomNickname] = useState(false);
   const navigate = useNavigate();
   const navRedirect = useSearchParam('redirect');
 
   const [{ loading, error }, handleRegister] = useAsyncFn(async () => {
     await string()
-      .email(t('邮箱格式不正确'))
-      .required(t('邮箱不能为空'))
-      .max(40, t('邮箱最长限制40个字符'))
-      .validate(email);
+      .required(t('用户名不能为空'))
+      .min(2, t('用户名不能少于2个字符'))
+      .max(20, t('用户名最长限制20个字符'))
+      .matches(/^[A-Za-z0-9_\u4e00-\u9fa5]+$/, t('用户名只能包含中英文、数字和下划线'))
+      .validate(username);
 
     await string()
       .min(6, t('密码不能低于6位'))
@@ -48,11 +47,10 @@ export const RegisterView: React.FC = React.memo(() => {
       .max(40, t('密码最长限制40个字符'))
       .validate(password);
 
-    const data = await registerWithEmail({
-      email,
+    const data = await registerWithUsername({
+      username,
       password,
       nickname,
-      emailOTP,
     });
 
     setGlobalUserLoginInfo(data);
@@ -63,18 +61,13 @@ export const RegisterView: React.FC = React.memo(() => {
     } else {
       navigate('/main');
     }
-  }, [email, nickname, password, emailOTP, navRedirect]);
+  }, [username, nickname, password, navRedirect]);
 
-  const [{ loading: sendEmailLoading }, handleSendEmail] =
-    useAsyncRequest(async () => {
-      await model.user.verifyEmail(email);
-      showSuccessToasts(t('发送成功, 请检查你的邮箱。'));
-      setSendedEmail(true);
-    }, [email]);
+      
 
-  useWatch([email, customNickname], () => {
+  useWatch([username, customNickname], () => {
     if (!customNickname) {
-      setNickname(getEmailAddress(email));
+      setNickname(username);
     }
   });
 
@@ -86,36 +79,15 @@ export const RegisterView: React.FC = React.memo(() => {
 
       <div>
         <div className="mb-4">
-          <div className="mb-2">{t('邮箱')}</div>
+          <div className="mb-2">{t('用户名')}</div>
           <EntryInput
-            name="reg-email"
-            placeholder="name@example.com"
+            name="reg-username"
+            placeholder={t('请输入用户名')}
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-
-        {getGlobalConfig().emailVerification && (
-          <>
-            {!sendedEmail && (
-              <PrimaryBtn loading={sendEmailLoading} onClick={handleSendEmail}>
-                {t('向邮箱发送校验码')}
-              </PrimaryBtn>
-            )}
-
-            <div className="mb-4">
-              <div className="mb-2">{t('邮箱校验码')}</div>
-              <EntryInput
-                name="reg-email-otp"
-                type="text"
-                placeholder="6位校验码"
-                value={emailOTP}
-                onChange={(e) => setEmailOTP(e.target.value)}
-              />
-            </div>
-          </>
-        )}
 
         <div className="mb-4 relative">
           <div className="mb-2 flex items-center">
@@ -169,7 +141,3 @@ export const RegisterView: React.FC = React.memo(() => {
   );
 });
 RegisterView.displayName = 'RegisterView';
-
-function getEmailAddress(email: string) {
-  return email.split('@')[0];
-}
