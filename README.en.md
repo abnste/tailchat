@@ -1,6 +1,7 @@
 # Tailchat(User name login to register version)
 
-If the server has been deployed, it is recommended to clear the MongoDB database and reset it directly
+If the server has been deployed, it is recommended to clear the MongoDB database and reset it directly.
+
 If the first deployment is implemented, you can replace the image source as this branch according to the official deployment process.
 
 [![Docker Publish](https://github.com/msgbyte/tailchat/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/msgbyte/tailchat/actions/workflows/docker-publish.yml)
