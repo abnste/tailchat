@@ -1,5 +1,8 @@
 # Tailchat（用户名登录注册版本）
 
+如是已部署的服务器，建议直接将MongoDB数据库清空重置
+如首次部署，按官方部署流程，替换镜像源为本分支即可
+
 [![Docker Publish](https://github.com/msgbyte/tailchat/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/msgbyte/tailchat/actions/workflows/docker-publish.yml)
 ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/moonrailgun/tailchat/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/moonrailgun/tailchat)
@@ -10,6 +13,7 @@
 
 ![tailchat](https://socialify.git.ci/msgbyte/tailchat/image?description=1&font=Inter&forks=1&issues=1&language=1&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F86033898%3Fs%3D200%26v%3D4&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Light)
 
+[English](./README.en.md)
 
 ## 在您自己工作区中的下一代 noIM 应用程序
 
