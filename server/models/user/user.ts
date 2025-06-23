@@ -40,20 +40,22 @@ export class User extends TimeStamps implements Base {
 
   /**
    * 用户名 不可被修改
-   * 与email必有一个
-   */
-  @prop()
-  username?: string;
-
-  /**
-   * 邮箱 不可被修改
    * 必填
    */
   @prop({
-    index: true,
     unique: true,
+    required: true,
   })
-  email: string;
+  username: string;
+
+  /**
+   * 邮箱 
+   */
+  @prop({
+    index: true,
+    required: false,
+  })
+  email?: string;
 
   @prop()
   password!: string;
