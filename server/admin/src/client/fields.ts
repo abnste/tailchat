@@ -22,16 +22,18 @@ export const userFields = [
       sort: true,
     },
   }),
-  createEmailField('email', {
+  createTextField('username', {
     edit: {
       rules: [
         {
           required: true,
         },
-        {
-          validator: emailValidator,
-        },
       ],
+    },
+  }),
+  createEmailField('email', {
+    edit: {
+      rules: [],
     },
   }),
   createTextField('nickname'),
